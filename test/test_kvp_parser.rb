@@ -62,8 +62,9 @@ module ParserTest
       d.instance.parse("k1#v1 k2#v2") {|_, v| assert_equal({"k1"=>"v1", "k2"=>"v2"}, v)}
     end
 
-    def test_types_param
-      parser = Fluent::TextParser::KVPParser.new
+    def test_key_prefix
+      d = create_driver({"key_prefix" => "parsed_"})
+      d.instance.parse("k1=v1 k2=v2") {|_, v| assert_equal({"parsed_k1"=>"v1", "parsed_k2"=>"v2"}, v)}
     end
 
   end

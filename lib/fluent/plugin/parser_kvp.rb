@@ -6,6 +6,7 @@ module Fluent
 
       Plugin.register_parser('kvp', self)
 
+      config_param :key_prefix, :string, :default => ''
       config_param :kv_delimiter, :string, :default => '\t\s'
       config_param :kv_char, :string, :default => '='
       config_param :time_key, :string, :default => 'time'
@@ -24,7 +25,7 @@ module Fluent
         record = {}
 
         text.scan(@kv_regex) do | m |
-          k = (m[0][0] == '"' and m[0][-1] == '"') ? m[0][1..-2] : m[0]
+          k = @key_prefix + m[0]
           v = (m[1][0] == '"' and m[1][-1] == '"') ? m[1][1..-2] : m[1]
           record[k] = v
         end
