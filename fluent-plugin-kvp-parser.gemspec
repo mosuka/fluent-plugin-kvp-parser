@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-kvp-parser"
-  spec.version       = "0.0.1"
+  spec.version       = "0.0.2"
   spec.description   = 'Fluentd parser plugin to parse key value pairs'
   spec.authors       = ["mosuka"]
   spec.email         = ["minoru.osuka@gmail.com"]

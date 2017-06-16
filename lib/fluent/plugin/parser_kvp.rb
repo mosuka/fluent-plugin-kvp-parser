@@ -16,7 +16,7 @@ module Fluent
           @kv_delimiter = Regexp.new(@kv_delimiter[1..-2])
         end
 
-        @kv_regex_str = '("(?:(?:\\\.|[^"])*)"|(?:[^' + @kv_delimiter + ']*))\s*' + @kv_char + '\s*("(?:(?:\\\.|[^"])*)"|(?:[^' + @kv_delimiter + ']*))'
+        @kv_regex_str = '(?:(?:([\w]+)\s*' + @kv_char + '\s*("(?:(?:\\\.|[^"])*)"|(?:[^' + @kv_delimiter + ']*)))(?:|[' + @kv_delimiter + ']*))'
         @kv_regex = Regexp.new(@kv_regex_str)
       end
 

@@ -22,8 +22,7 @@ module ParserTest
       d.instance.parse("k2=v2\t \t k1=v1") {|_, v| assert_equal({"k1"=>"v1", "k2"=>"v2"}, v)}
       d.instance.parse("k1=\"v 1\"") {|_, v| assert_equal({"k1"=>"v 1"}, v)}
       d.instance.parse("k1=\"v 1\" k2=\"v 2\"") {|_, v| assert_equal({"k1"=>"v 1", "k2"=>"v 2"}, v)}
-      d.instance.parse("\"k 1\"=\"v 1\" \"k 2\"=\"v 2\"") {|_, v| assert_equal({"k 1"=>"v 1", "k 2"=>"v 2"}, v)}
-      d.instance.parse("\"k 1\"=\"v \\\"1\\\"\" \"k 2\"=\"v \\\"2\\\"\"") {|_, v| assert_equal({"k 1"=>"v \\\"1\\\"", "k 2"=>"v \\\"2\\\""}, v)}
+      d.instance.parse("k1=\"v \\\"1\\\"\" k2=\"v \\\"2\\\"\"") {|_, v| assert_equal({"k1"=>"v \\\"1\\\"", "k2"=>"v \\\"2\\\""}, v)}
     end
 
     def test_with_types
