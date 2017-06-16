@@ -15,6 +15,7 @@ module ParserTest
     def test_basic
       d = create_driver({})
       d.instance.parse("k1=v1 k2=v2") {|_, v| assert_equal({"k1"=>"v1", "k2"=>"v2"}, v)}
+      d.instance.parse("k.1=v1 k.2=v2") {|_, v| assert_equal({"k.1"=>"v1", "k.2"=>"v2"}, v)}
       d.instance.parse("k1=v1    k2=v2") {|_, v| assert_equal({"k1"=>"v1", "k2"=>"v2"}, v)}
       d.instance.parse("k2=v2 k1=v1") {|_, v| assert_equal({"k1"=>"v1", "k2"=>"v2"}, v)}
       d.instance.parse("k2=v2\tk1=v1") {|_, v| assert_equal({"k1"=>"v1", "k2"=>"v2"}, v)}
@@ -47,18 +48,18 @@ module ParserTest
     end
 
     def test_custom_delimiter
-      d = create_driver({"kv_delimiter" => "|"})
+      d = create_driver({"key_value_pair_delimiter" => "|"})
       d.instance.parse("k1=v1|k2=v2") {|_, v| assert_equal({"k1"=>"v1", "k2"=>"v2"}, v)}
       d.instance.parse("k1=v1||k2=v2") {|_, v| assert_equal({"k1"=>"v1", "k2"=>"v2"}, v)}
 
-      d = create_driver({"kv_delimiter" => "@ "})
+      d = create_driver({"key_value_pair_delimiter" => "@ "})
       d.instance.parse("k1=v1@k2=v2 k3=v3") {|_, v|
         assert_equal({"k1"=>"v1", "k2"=>"v2", "k3"=>"v3"}, v)
       }
     end
 
     def test_custom_kv_char
-      d = create_driver({"kv_char" => "#"})
+      d = create_driver({"key_value_delimiter" => "#"})
       d.instance.parse("k1#v1 k2#v2") {|_, v| assert_equal({"k1"=>"v1", "k2"=>"v2"}, v)}
     end
 

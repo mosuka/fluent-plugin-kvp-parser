@@ -6,18 +6,19 @@ module Fluent
 
       Plugin.register_parser('kvp', self)
 
+      config_param :key_char, :string, :default => '\w.-'
       config_param :key_prefix, :string, :default => ''
-      config_param :kv_delimiter, :string, :default => '\t\s'
-      config_param :kv_char, :string, :default => '='
+      config_param :key_value_pair_delimiter, :string, :default => '\t\s'
+      config_param :key_value_delimiter, :string, :default => '='
       config_param :time_key, :string, :default => 'time'
 
       def configure(conf={})
         super
-        if @kv_delimiter[0] == '/' and @kv_delimiter[-1] == '/'
-          @kv_delimiter = Regexp.new(@kv_delimiter[1..-2])
+        if @key_value_pair_delimiter[0] == '/' and @key_value_pair_delimiter[-1] == '/'
+          @kv_delimiter = @key_value_pair_delimiter[1..-2]
         end
 
-        @kv_regex_str = '(?:(?:([\w]+)\s*[' + @kv_char + ']\s*("(?:(?:\\\.|[^"])*)"|(?:[^"' + @kv_delimiter + ']*)))(?:|[' + @kv_delimiter + ']*))'
+        @kv_regex_str = '(?:(?:([' + @key_char + ']+)\s*[' + @key_value_delimiter + ']\s*("(?:(?:\\\.|[^"])*)"|(?:[^"' + @key_value_pair_delimiter + ']*)))(?:|[' + @key_value_pair_delimiter + ']*))'
         @kv_regex = Regexp.new(@kv_regex_str)
       end
 
