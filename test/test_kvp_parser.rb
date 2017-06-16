@@ -24,6 +24,8 @@ module ParserTest
       d.instance.parse("k1=\"v 1\"") {|_, v| assert_equal({"k1"=>"v 1"}, v)}
       d.instance.parse("k1=\"v 1\" k2=\"v 2\"") {|_, v| assert_equal({"k1"=>"v 1", "k2"=>"v 2"}, v)}
       d.instance.parse("k1=\"v \\\"1\\\"\" k2=\"v \\\"2\\\"\"") {|_, v| assert_equal({"k1"=>"v \\\"1\\\"", "k2"=>"v \\\"2\\\""}, v)}
+      d.instance.parse("aaa k.1=v1 k.2=v2") {|_, v| assert_equal({"k.1"=>"v1", "k.2"=>"v2"}, v)}
+      d.instance.parse("k0=0 aaa k.1=v1 k.2=v2") {|_, v| assert_equal({"k0"=>"0", "k.1"=>"v1", "k.2"=>"v2"}, v)}
     end
 
     def test_with_types
